@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 const font = Poppins({
@@ -23,7 +24,7 @@ export default function Home() {
         </h1>
         <p className="text-lg text-white">A full blown Authentication system</p>
         <div>
-          
+
         </div>
       </div>
     </main>
