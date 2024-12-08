@@ -16,11 +16,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+// import { Loader2 } from "lucide-react";
 
 // card wrapper impot
 import { CardWrapper } from "./card-wrapper";
-import { cn } from "@/lib/utils";
+import { FormError } from "../form-error";
+import { FormSucess } from "../form-success";
+
 
 export function LoginForm() {
   // 1. Define your form.
@@ -32,6 +34,10 @@ export function LoginForm() {
     },
   });
 
+  function onSubmit(values: z.infer<typeof LoginSchema>) {
+    console.log(values)
+  }
+
   return (
     <CardWrapper
       headerLabel="Welcome back"
@@ -41,7 +47,7 @@ export function LoginForm() {
     >
       <div className="">
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(() => {})}>
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <FormField
                 control={form.control}
@@ -54,7 +60,7 @@ export function LoginForm() {
                         type="email"
                         placeholder="john.doe@example.com"
                         {...field}
-                        className={form.formState.errors.email && " bg-red-50"}
+                        className={form.formState.errors.email && " bg-destructive/15"}
                       />
                     </FormControl>
                     <FormMessage />
@@ -73,7 +79,7 @@ export function LoginForm() {
                         placeholder="******"
                         {...field}
                         className={
-                          form.formState.errors.password && " bg-red-50"
+                          form.formState.errors.password && "bg-destructive/15"
                         }
                       />
                     </FormControl>
@@ -82,6 +88,8 @@ export function LoginForm() {
                 )}
               />
             </div>
+            <FormError message="Issue"/>
+            <FormSucess message="Issue"/>
             <Button className="w-full" type="submit">
               Login
             </Button>
