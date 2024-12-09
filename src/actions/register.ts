@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { getUserByEmail } from "@/data/user";
 
 export async function register(values: z.infer<typeof RegisterShema>) {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -16,11 +17,7 @@ export async function register(values: z.infer<typeof RegisterShema>) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingUser = await db.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const existingUser = await getUserByEmail(email);
 
   if (existingUser) return { error: "Email already in use" };
 
