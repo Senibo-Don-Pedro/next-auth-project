@@ -69,7 +69,6 @@ export function LoginForm() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        type="email"
                         placeholder="john.doe@example.com"
                         disabled={isPending}
                         {...field}
