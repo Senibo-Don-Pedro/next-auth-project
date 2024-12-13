@@ -19,6 +19,8 @@ export async function login(values: z.infer<typeof LoginSchema>) {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
+
+    return { success: "Login Sucess!" };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -29,6 +31,8 @@ export async function login(values: z.infer<typeof LoginSchema>) {
       }
     }
 
+
+    // return { error: "An unexpected error occurred." };
     throw error;
   }
 }

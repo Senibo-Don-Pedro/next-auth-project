@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
-// card wrapper impot
+// card wrapper import
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
@@ -26,6 +27,12 @@ import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 
 export function LoginForm() {
+
+  const searchParams = useSearchParams()
+  const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+    ? "Emai already in use with different provider!"
+    : ""
+
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -44,8 +51,10 @@ export function LoginForm() {
 
     startTransition(() => {
       login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+
+        //TODO: add when we add 2FA
+        // setSuccess(data?.success);
       });
     });
   }
@@ -103,7 +112,7 @@ export function LoginForm() {
                 )}
               />
             </div>
-            <FormError message={error} />
+            <FormError message={error || urlError} />
             <FormSuccess message={success} />
             <Button disabled={isPending} className="w-full" type="submit">
               {isPending ? (
