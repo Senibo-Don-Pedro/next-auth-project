@@ -6,6 +6,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
 
 export async function register(values: z.infer<typeof RegisterShema>) {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -30,5 +31,12 @@ export async function register(values: z.infer<typeof RegisterShema>) {
   });
 
   // Todo: send verification email
-  return { success: "User Created!!" };
+  const verificationToken = await generateVerificationToken(email)
+
+
+
+
+
+
+  return { success: "Confirmation email sent " };
 }
