@@ -27,11 +27,11 @@ import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 
 export function LoginForm() {
-
-  const searchParams = useSearchParams()
-  const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
-    ? "Emai already in use with different provider!"
-    : ""
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Emai already in use with different provider!"
+      : "";
 
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
@@ -53,8 +53,8 @@ export function LoginForm() {
       login(values).then((data) => {
         setError(data?.error);
 
-        //TODO: add when we add 2FA
-        // setSuccess(data?.success);
+        // TODO: add when we add 2FA
+        setSuccess(data?.success);
       });
     });
   }
