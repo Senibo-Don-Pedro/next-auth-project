@@ -10,7 +10,6 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
 export async function register(values: z.infer<typeof RegisterShema>) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = RegisterShema.safeParse(values);
 
   if (!validatedFields.success) return { error: "Invalid fields!!" };

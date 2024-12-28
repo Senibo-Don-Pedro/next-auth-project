@@ -4,7 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,41 +17,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 
 // card wrapper import
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { login } from "@/actions/login";
+
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import { reset } from "@/actions/reset";
 
-export function LoginForm() {
-  const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Emai already in use with different provider!"
-      : "";
-
+export function ResetForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   // 1. Define your form.
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof LoginSchema>) {
+  function onSubmit(values: z.infer<typeof ResetSchema>) {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      login(values).then((data) => {
+      reset(values).then((data) => {
         setError(data?.error);
 
         // TODO: add when we add 2FA
@@ -62,10 +54,10 @@ export function LoginForm() {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
-      backButtonHref="/auth/register"
-      showSocial
+      headerLabel="Forgot your Password?"
+      backButtonLabel="Back to login"
+      backButtonHref="/auth/login"
+      // showSocial
     >
       <div className="">
         <Form {...form}>
@@ -91,37 +83,8 @@ export function LoginForm() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="******"
-                        disabled={isPending}
-                        {...field}
-                        className={
-                          form.formState.errors.password && "bg-destructive/15"
-                        }
-                      />
-                    </FormControl>
-                    <Button
-                      size={"sm"}
-                      variant={"link"}
-                      asChild
-                      className="px-0 font-normal"
-                    >
-                      <Link href={"/auth/reset"}>Forgot Password?</Link>
-                    </Button>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
-            <FormError message={error || urlError} />
+            <FormError message={error} />
             <FormSuccess message={success} />
             <Button disabled={isPending} className="w-full" type="submit">
               {isPending ? (
@@ -129,7 +92,7 @@ export function LoginForm() {
                   <Loader2 className="animate-spin" />
                 </div>
               ) : (
-                "Login"
+                "Send reset email"
               )}
             </Button>
           </form>
