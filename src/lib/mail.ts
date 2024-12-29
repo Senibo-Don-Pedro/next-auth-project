@@ -50,14 +50,14 @@ const transporter = nodemailer.createTransport({
 
 const fromEmail = `"Auth-Masterclass" <${process.env.SMTP_EMAIL}>`;
 
-// export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
-//   await transporter.sendMail({
-//     from: fromEmail,
-//     to: email,
-//     subject: "2FA Code",
-//     html: `<p>Your 2FA code: ${token}</p>`,
-//   });
-// };
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  await transporter.sendMail({
+    from: fromEmail,
+    to: email,
+    subject: "2FA Code",
+    html: `<p>Your 2FA code: ${token}</p>`,
+  });
+};
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${appUrl}/auth/new-verification?token=${token}`;
