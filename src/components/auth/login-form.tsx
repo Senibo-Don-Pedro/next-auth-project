@@ -31,7 +31,7 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Emai already in use with different provider!"
+      ? "Email already in use with different provider!"
       : "";
 
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -53,28 +53,26 @@ export function LoginForm() {
     setSuccess("");
 
     startTransition(() => {
-      login(values)
-        .then((data) => {
-          // setError(data?.error);
+      login(values).then((data) => {
+        // setError(data?.error);
 
-          // // TODO: add when we add 2FA
-          // setSuccess(data?.success);
+        // // TODO: add when we add 2FA
+        // setSuccess(data?.success);
 
-          if (data?.error) {
-            form.reset();
-            setError(data.error);
-          }
+        if (data?.error) {
+          form.reset();
+          setError(data.error);
+        }
 
-          if (data?.success) {
-            form.reset();
-            setSuccess(data.success);
-          }
+        if (data?.success) {
+          form.reset();
+          setSuccess(data.success);
+        }
 
-          if (data?.twoFactor) {
-            setShowTwoFactor(true);
-          }
-        })
-        .catch(() => setError("Something went wrong!"));
+        if (data?.twoFactor) {
+          setShowTwoFactor(true);
+        }
+      });
     });
   }
 
