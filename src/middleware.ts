@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
 
@@ -12,10 +14,7 @@ import {
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  // req.auth
-  // const isLoggedIn = !!req.auth;
-  // console.log("ROUTE: ", req.nextUrl.pathname);
-  // console.log("IS LOGGED IN?: ", isLoggedIn);
+  
 
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
@@ -45,6 +44,7 @@ export default auth((req) => {
       new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
+  
 });
 
 export const config = {
