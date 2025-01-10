@@ -38,7 +38,7 @@
 
 import nodemailer from "nodemailer";
 
-const appUrl = "http://localhost:3000";
+const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 const transporter = nodemailer.createTransport({
   service: "gmail", // Or "smtp-relay.sendinblue.com" for Brevo
