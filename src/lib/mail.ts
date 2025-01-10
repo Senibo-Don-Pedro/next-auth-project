@@ -48,7 +48,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const fromEmail = `"Auth-Masterclass" <${process.env.SMTP_EMAIL}>`;
+const fromEmail = `noreply@${process.env.SMTP_EMAIL}`;
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await transporter.sendMail({

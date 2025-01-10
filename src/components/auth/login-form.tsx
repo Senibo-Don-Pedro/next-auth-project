@@ -60,7 +60,7 @@ export function LoginForm() {
         // setSuccess(data?.success);
 
         if (data?.error) {
-          form.reset();
+          // form.reset();
           setError(data.error);
         }
 
