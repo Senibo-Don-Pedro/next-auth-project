@@ -112,10 +112,19 @@ const SettingsPage = () => {
                             {...field}
                             placeholder="john.doe@example.com"
                             type="email"
-                            disabled={isPending}
+                            disabled
                           />
                         </FormControl>
                         <FormMessage />
+                        <FormDescription>
+                          I initially planned to implement a feature allowing
+                          users to update their email addresses. However, due to
+                          unforeseen issues preventing the feature from
+                          functioning as intended, I have temporarily disabled
+                          it. This functionality is currently not operational
+                          and will require further investigation or adjustments
+                          before re-enabling it.
+                        </FormDescription>
                       </FormItem>
                     )}
                   />
