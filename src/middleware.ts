@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
 
@@ -11,9 +9,7 @@ import {
 } from "@/routes";
 
 
-const { auth } = NextAuth(authConfig);
-
-export default auth((req) => {
+export default NextAuth(authConfig).auth((req) => {
   
 
   const { nextUrl } = req;
@@ -44,6 +40,8 @@ export default auth((req) => {
       new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
+
+  return null;
   
 });
 
