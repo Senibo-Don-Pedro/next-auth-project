@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
 
 import * as z from "zod";
@@ -42,6 +42,14 @@ const SettingsPage = () => {
   const { update } = useSession();
 
   const user = useCurrentUser();
+
+  useEffect(() => {
+    if (user === undefined) {
+      // Trigger a page reload if the user data is undefined
+      window.location.reload();
+    }
+  }, [user]);
+
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
